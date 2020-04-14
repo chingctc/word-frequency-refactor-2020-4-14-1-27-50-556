@@ -4,17 +4,15 @@ public class WordFrequencyGame {
 
     public static final String SPACE_PATTERN = "\\s+";
     public static final String NEWLINE_DELIMITER = "\n";
-    public static final String CALCULATE_ERROR = "Calculate Error";
     public static final String SPACE_DELIMITER = " ";
 
-    public String getResult(String sentence) {
-        try {
-            List<WordInfo> wordInfoList = calculateWordFrequency(sentence);
-            StringJoiner joiner = getWordFrequencyResult(wordInfoList);
-            return joiner.toString();
-        } catch (Exception exception) {
-            return CALCULATE_ERROR;
+    public String getResult(String sentence) throws CalculationErrorException {
+        List<WordInfo> wordInfoList = calculateWordFrequency(sentence);
+        StringJoiner joiner = getWordFrequencyResult(wordInfoList);
+        if(joiner == null){
+            throw new CalculationErrorException();
         }
+        return joiner.toString();
     }
 
     private List<WordInfo> calculateWordFrequency(String sentence) {
